@@ -1,0 +1,18 @@
+# AI YouTube Summary
+
+
+## Description
+The purpose of this repo is to help you make summaries of public YouTube videos quickly and easily. It only requires an API key for OpenAI (it doesn't use a YouTube or Google API). In general, there are a few ways of making summaries of YouTube videos. You can download the audio track and use a speech to text program, you can use a browser extension designed for this, or you can use some combination of these methods. After experimenting with these, I found it was much easier just to use a nice library which downloads YouTube's generated transcripts (via the <a href=https://github.com/jdepoix/youtube-transcript-api target="_blank">youtube-transcript-api</a> python module). Usually you won't need to be an authenticated user with a cookie to do this (if your IP is your "home" IP and not distrusted by YouTube). Then, you simply send the transcript to OpenAI along with a prompt to summarize it. This script does this for you quickly and easily. I find this is much easier than trying to fit the entire transcript into a context window in several parts along with a custom prompt. The OpenAI API will accept all of it in one go, and if you use a reasonable model (like GPT5 mini) you'll only pay a penny or two for it.
+
+
+## Instructions for Use
+- Fork a copy of this repo for yourself.
+- Go to the <a href="https://platform.openai.com" target="_blank">OpenAI Platform Website</a>, make yourself an API key, and add a little money to the account to get started. It's very inexpensive to perform summaries, and usually they're one or two pennies apiece as long as you stay below 10,000 tokens for the transcript (fairly easy for a 30-minute tech talk).
+- Change the file "rename_me.env" to ".env" and put your OpenAI API key in the appropriate place. This file is in the .gitignore so it won't be pushed with any subsequent changes.
+- Edit the prompts.ini file and add the top 5 prompts you use under the headings in square brackets, or just use the ones that are already there. Be sure to leave the headings there; they're a part of the .ini file format.
+- Usage: run the script as you would normally run python scripts in your environment. There are two positional parameters: the first one is mandatory, and it's the YouTube video ID string (you can get this from the URL of any YouTube video you visit in a browser). The second parameter is optional, and it's a number corresponding to the number of the prompt you want to use in the prompts.ini file. If you want the first prompt, enter a '1,' for the second enter a '2,' etc. If this is left out, the first prompt in prompt.ini will be selected. If the prompt.ini file is missing, then a generic default prompt is used.
+```
+python get_yt_summary.py <YouTube Video ID (mandatory)> <Prompt ID (optional)>
+```
+- The summary from OpenAI and the full text of the YouTube transcript will be stored in a file, with the video's title at the top. These files are named with a date string for easy sorting, and will be stored in the yt_summaries folder.
+- About workflow: I find it's easiest to clone this onto a local laptop (rather than a server system) and make shortcuts on your desktop for easy access. Make a shortcut for a command window or terminal, and a shortcut for explorer/finder to access the resulting text files. Then, when browsing your YouTube, you can simply pull the video ID from the URL and paste it into the python command, pulling the result into your favorite text editor from the explorer/finder window. It runs fine on a server as well, although sometimes YouTube has a hard time allowing IP addresses from Hosting services or the public cloud.
