@@ -19,7 +19,7 @@ if "OPENAI_API_KEY" not in os.environ:
     print('Error: OPENAI_API_KEY not found in environment variables.')
     sys.exit(1)
 if len(sys.argv) < 2:
-    print('Usage: python get_yt_summary.py <YouTube Video ID> <Prompt ID (optional)>')
+    print('Usage: python ai_yt_summary.py <YouTube Video ID> <Prompt ID (optional)>')
     sys.exit(1)
 video_id = sys.argv[1]
 if os.path.isfile('prompts.ini'):
